@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siffin Metals</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    
+    <!-- CoreUI -->
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css" />
+    
+    <!-- html2canvas JS -->
+    <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+            text-align: center;
+            padding: 0px 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .content {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            height: 350px;
+            overflow: scroll;
+        }
+
+        .table-wrapper {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .footer {
+            background-color: #fff;
+            border-top: 1px solid #dee2e6;
+            padding: 10px;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 45px;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .footer .table {
+            margin-bottom: 0;
+        }
+
+        .table > thead > tr > th,
+        .table > tbody > tr > td {
+            padding: 8px;
+            border: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .table thead th {
+            vertical-align: middle;
+        }
+
+        /* Bottom Navigation Styles */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn li {
+            width:18.5vw;
+        }
+
+        input {
+            margin: 0px 0;
+            padding: 10px;
+            width: 20% !important;
+            box-sizing: border-box;
+            border: none !important;
+    border-bottom: 1px solid greenyellow !important;
+    outline: none !important;
+    border-radius: 0px !important;
+    text-align: center;
+        }
+        input:focus{
+            outline: none !important;
+            box-shadow: none !important;
+          }
+           /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+#multiplicationForm {
+    /* margin-bottom: 10; */
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #ffffff;
+    opacity: 1;
+}
+#main-customer-name {
+    background-color: #fff; /* Explicitly set a background color */
+    color: black; /* Make sure text color is explicit */
+    z-index: 100; /* Ensure the input is at the correct layer */
+}
+.serach-date>div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: bold;
+}
+.serach-date>div>input {
+    width: 100% !important;
+    font-size: 12px;
+}
+
+.serach-date>div>label {
+    margin-bottom: 0px;
+}
+/* .dynamicells {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: max-content;
+}
+
+.dynamicells>td {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    display: flex;
+} */
+
+.proffs,.proffs2,.proffs3 {
+     display: flex;
+           
+            column-gap: 10px;
+            flex-direction: row;
+    justify-content: center;
+}
+
+.proffs {
+    border: 2px solid greenyellow;
+}
+
+.proffs2 {
+    border: 2px solid greenyellow;
+    border-top: none !important;
+}
+.proffs3 {
+    margin-bottom: 100px;
+    border: 2px solid greenyellow;
+    border-top: none !important;
+
+}
+.proffs>div,.proffs2>div,.proffs3>div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: -webkit-fill-available;
+}
+.proffs>div>p:first-child,.proffs2>div>p:first-child,.proffs3>div >p:first-child{
+    font-weight: bold;
+    font-size: 14px;
+}
+.proffs>div>p:last-child,.proffs2>div>p:last-child,.proffs3>div >p:last-child {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cui-body-color);
+}
+
+
+.timme>p:not(:first-child){
+    margin-bottom: 0px;
+}
+
+.timme {
+    font-size: 11px;
+    font-weight: bold;
+}
+.fa, .fas {
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div>
+            <div style="display: flex; justify-content: space-around; align-items: center; height: 48px; margin-top: 8px; width: 100%;">
+                <p style="font-size: 35px; margin: 0px; color: limegreen;">&#65018;</p>
+                <h3 style="margin: 6px 5px; color: limegreen;">Siffin Metals</h3>
+                <p style="font-size: 35px; color: limegreen; margin: 0px;">&#65010;</p>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <div class="timme">
+                    <p id="date-time" class="text-muted"></p>
+                    <p>Date: <span id="date"></span></p>
+                    <p>Time: <span id="time"></span></p>
+                </div>
+                <div>
+                    <p style="margin-bottom: -3px; font-size: 12px; font-weight: bold;">Customer Name:</p>
+                    <input type="text" id="main-customer-name" style="border-bottom: 1px solid yellowgreen !important; height: 22px; outline: none; margin: 0px; border: none; border: 2px solid white; width: 70% !important;font-size: 12px;
+    font-weight: bold;" oninput="document.getElementById('customer-name-display').innerText = this.value;">
+                    <span id="customer-name-display" style="display: none;"></span>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <!-- Tab Content Sections -->
+<div id="tab-content">
+    <div id="home" class="tab" style="display: block;">
+        
+         <!-- Main Content with Scrollable Table -->
+         <div class="content">
+            <div class="headerstyle">
+                <table class="table table-bordered t-body" style="border: 1px solid greenyellow !important; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                    <tbody>
+                        <tr>
+                            <td>Metal's</td>
+                            <td>Kilo</td>
+                            <td>Price</td>
+                            <td>Total</td>
+                            <td>Action's</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-wrapper">
+                <!-- <table class="table table-bordered t-body">
+                    <tbody id="data-table-body"></tbody>
+                </table> -->
+
+                <table id="current-records-table" class="table table-striped">
+                    <tbody id="current-records-body"></tbody>
+                </table>
+                
+            </div>
+        </div>
+
+        <!-- Footer with Totals and Balances -->
+        <div class="footer">
+            <table class="table table-bordered foot-font">
+                <thead>
+                    <th class="text-center">Total Amount</th>
+                    <th class="text-center">B/C from Customer</th>
+                    <th class="text-center">B/C to Customer</th>
+                    <th class="text-center">Net Amount</th>
+                    
+                </thead>
+              
+                    <tr>
+                        <td id="total-amount">₹0.00</td>
+                        <td><input style="margin: auto;width: 100% !important;" type="number" id="balance-from-customer" class="form-control" value="0"></td>
+                        <td><input style="margin: auto;width: 100% !important;" type="number" id="balance-to-customer" class="form-control" value="0"></td>
+                        <td id="net-amount" class="text-start">₹0.00</td>   
+                    </tr>
+              
+               
+            </table>
+        </div>
+        
+    </div>
+    <div id="orders" class="tab" style="display: none;">
+        <h4>Orders</h4>
+            <!-- Search and Filter Controls -->
+        <div class="d-flex align-items-center mb-3 serach-date">
+
+            <div>
+                <label for="">Search</label>
+                <input type="text" id="searchInput" placeholder="Search..." class="form-control me-2" >
+            </div>
+           <div>
+            <label for="">Start Date</label>
+            <input type="date" id="fromDate" placeholder="Start Date" class="form-control me-2" >
+           </div>
+            <div>
+                <label for="">End date</label>
+                <input type="date" id="toDate" placeholder="End Date" class="form-control me-2" >
+            </div>
+           
+        </div>
+        <div class="d-flex align-items-center">
+            <button id="fetchButton" class="btn btn-primary me-2" style="background-color: darkgreen;font-size: 14px;padding: 1px 8px;" >Fetch Data</button>
+            <button id="clearButton" class="btn btn-secondary" style="background-color: darkred;font-size: 14px;padding: 1px 8px;" >Clear Filters</button>
+        </div>
+
+       <table class="table table-striped" style="width: 100%;">
+                <thead>
+                    <th>ID</th>
+                    <th>Date/Time</th>
+                    <th>Cus Name</th>
+                    <th>Metal</th>
+                    <th>Kilo</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </thead>
+            </table>
+            <div style="    height: 380px !important;
+            overflow: scroll;">
+                    <table class="table table-striped">
+                        <tbody id="MyTBody">
+                
+                        </tbody>
+                <!-- <tfoot>
+                     <tr>
+                        <th colspan="4">Total</th>
+                        <td id="totalKilo"></td>
+                        <td id="totalPrice"></td>
+                        <td id="totalSum"></td>
+                    </tr>  <tr>
+                        <th colspan="4">Average</th>
+                        <td></td>
+                        <td id="avgPrice"></td>
+                        <td id="avgSum"></td>
+                    </tr> <tr>
+                        <th colspan="4">Your Price (per Kilo)</th>
+                        <td id="yourPricePerKilo" contenteditable="true" style="border: 1px solid lightgray;">0</td>
+                        <td>Total with Our Price</td>
+                        <td id="yourPriceTotal"></td>
+                    </tr> <tr>
+                        <th colspan="4">Profit</th>
+                        <td></td>
+                        <td>Profit</td>
+                        <td id="profitValue"></td>
+                    </tr>  <tr>
+                        <th colspan="4">Custom Value</th>
+                        <td>
+                            <input type="number" id="customValueInput" placeholder="Enter custom value" class="form-control" style="max-width: 205px;
+    width: 200px !important;">
+                        </td>
+                        <td>Difference Amt</td>
+                        <td id="valueDifference"></td>
+                    </tr> 
+                </tfoot> -->
+            </table>
+
+
+            <div class="proffs">
+
+                <div>
+                    <p>% Price</p>
+                    <p id="avgPrice"></p>
+                </div>
+                <div>
+                    <p>Total Kg</p>
+                    <p id="totalKilo"></p>
+                </div>
+                <div>
+                    <p>Total Price</p>
+                    <p id="totalPrice"></p>
+                </div>
+                
+                <div>
+                    <p>Total Sum</p>
+                    <p id="totalSum"></p>
+                </div>
+            </div>
+            <div class="proffs2">
+
+                <div>
+                    <p>Our Price</p>
+                <p id="yourPricePerKilo" contenteditable="true" style="    border:none;    border-bottom: 1px solid greenyellow !important;
+                width: 100px;
+                /* border: none; */
+                outline: none;">0</p>
+                </div>
+                <div>
+                    <p>Our Total</p>
+                <p id="yourPriceTotal"></p>
+                </div>
+                <div>
+                    <p>profit</p>
+                    <p id="profitValue"></p>
+                </div>
+                
+            </div>
+            <div class="proffs3">
+                <div>
+                    <p>Custom Value</p>
+                    <p> <input type="number" id="customValueInput" placeholder="Enter custom value" class="form-control" style="max-width: 205px;
+    width: 200px !important;    height: 16px;"></p>
+                </div>
+                <div>
+                    <p>Difference Amt</p>
+                    <p id="valueDifference"></p>
+                </div>
+            </div>
+
+
+            </div>
+    </div>
+    <div id="inventory" class="tab" style="display: none;">
+        <h4>Inventory</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Metal Name</th>
+                    <th>Total Kilo</th>
+                    <th>Avrage Price</th>
+                    <th>Total sum</th>
+                    <th>Market Price</th>
+                    <th>Profit</th>
+                    <!-- <th>Total</th> -->
+                </tr>
+            </thead>
+            <tbody id="Sheet2TBody"></tbody>
+        </table>
+    </div>
+    <div id="reports" class="tab" style="display: none;">
+        <h4>Reports</h4>
+        <p>View reports related to sales and inventory.</p>
+    </div>
+    <div id="settings" class="tab" style="display: none;">
+        <h4>Settings</h4>
+        <p>Configure application settings here.</p>
+    </div>
+</div>
+
+       
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="floating-btn">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button type="button" class="btn btn-danger" id="clear-table">
+            <i class="fas fa-trash"></i>
+        </button>
+        <button type="button" class="btn btn-success" id="screenshot-button">
+            <i class="fas fa-camera"></i>
+        </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+   <!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <ul class="nav justify-content-around nav-btn">
+        <li class="nav-item">
+            <a class="nav-link active" href="#" data-target="#home"> <button class="btn btn-primary">
+                <i class="fas fa-home"></i>
+            </button></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-target="#orders"><button class="btn btn-secondary" style="    background-color: limegreen;
+    border: none;" >
+                <i class="fa fa-database"></i>
+            </button></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-target="#inventory"><button class="btn btn-secondary"style="background-color: #ad1daa;border:none;" >
+                <i class="fas fa-box-open"></i>
+            </button></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-target="#reports"><button class="btn btn-info">
+                <i class="fas fa-file-alt"></i>
+            </button></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-target="#settings"><button class="btn btn-warning">
+                <i class="fas fa-cog"></i>
+            </button></a>
+        </li>
+    </ul>
+</nav>
+
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">New Entry</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form in Modal -->
+                    <form id="metal-form">
+                        <input type="hidden" name="id" id="form-id">
+                        <div class="form-group">
+                            <input type="hidden" name="date" id="form-date">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="customername" id="modal-customer-name" class="form-control" placeholder="Customer Name" readonly style="width: 100% !important;">
+                        </div>
+                        <div style="display: flex;column-gap: 9px;">
+                      
+                            <input type="text" name="metalname" class="form-control" placeholder="Metal Name">
+                       
+                            <input type="number" name="kilo" id="kilo" class="form-control" placeholder="Kilo" step="0.01" min="0">
+                     
+                        <p style="    margin: 11px 0px 0px 0px;">*</p>
+                   
+                            <input type="number" name="sum" id="sum" class="form-control" placeholder="Sum" step="0.01" min="0">
+                     
+                        <p style="    margin: 11px 0px 0px 0px;">==</p>
+                 
+                            <input type="text" name="finalsum" id="finalsum" class="form-control" placeholder="Total" readonly>
+                      
+                    </div>
+                    <br>
+                        <button type="submit" class="btn btn-primary" style="background-color: limegreen;
+    border: none;">Add Entry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="customerNameToast" style="position: fixed; bottom: 20px; right: 20px;" data-delay="3000">
+        <div class="toast-header">
+            <strong class="mr-auto">Notification</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Customer Name cannot be empty!
+        </div>
+    </div>
+
+
+
+    <!-- Success Notification Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Metal Item submitted successfully!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!-- Edit Modal -->
+ <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div style="display: flex;">
+                <div class="mb-3">
+                    <label for="editMetalName" class="form-label">Metal Name</label>
+                    <input type="text" class="form-control" plac id="editMetalName" style="width: 50% !important;">
+                </div>
+                <div class="mb-3">
+                    <label for="editKilo" class="form-label">Kilo</label>
+                    <input type="number" class="form-control" id="editKilo" style="width: 50% !important;" step="any">
+                </div>
+                <p style="    margin: 11px 0px 0px 0px;">*</p>  
+                <div class="mb-3">
+                    <label for="editPrice" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="editPrice" style="width: 50% !important;" step="any">
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: Red;
+                border: none;" >Close</button>
+                            <button type="button" class="btn btn-primary" id="saveChanges" style="background-color: limegreen;
+                border: none;">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loader" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+
+    <!-- Date and Time Script -->
+    <script>
+         window.onload = function() {
+        // Initialize the ID counter with a random ID or continue from the last used
+        let currentId = localStorage.getItem('lastId') ? parseInt(localStorage.getItem('lastId')) + 1 : Math.floor(Math.random() * 10000);
+
+        $('#formModal').on('show.bs.modal', function (e) {
+            const customerName = document.getElementById('main-customer-name').value;
+            document.getElementById('modal-customer-name').value = customerName;
+        });
+
+        function formatTime(date) {
+            let hours = date.getHours();
+            const minutes = date.getMinutes();
+            const seconds = date.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Convert hour '0' to '12'
+            const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+            return `${hours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
+        }
+
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        function updateDateTime() {
+            const currentDate = new Date();
+            const formattedDate = formatDate(currentDate);
+            const formattedTime = formatTime(currentDate);
+
+            document.getElementById('date').innerHTML = formattedDate;
+            document.getElementById('time').innerHTML = formattedTime;
+            // document.getElementById('form-date').value = `${formattedDate} ${formattedTime}`;
+            document.getElementById('form-date').value = formattedDate + " " + formattedTime;
+
+            // Log the combined date and time
+            // console.log(`Form Date Value: ${formattedDate} ${formattedTime}`);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        function updateFinalSum() {
+            const kilo = parseFloat(document.getElementById('kilo').value) || 0;
+            const sum = parseFloat(document.getElementById('sum').value) || 0;
+            const finalSum = kilo * sum;
+            // document.getElementById('finalsum').value = `₹${Math.round(finalSum)}`;
+            document.getElementById('finalsum').value = `₹${finalSum.toFixed(2)}`;
+        }
+
+        function updateNetAmount() {
+            const totalAmount = parseFloat(document.getElementById('total-amount').textContent.replace('₹', '')) || 0;
+            const balanceFromCustomer = parseFloat(document.getElementById('balance-from-customer').value) || 0;
+            const balanceToCustomer = parseFloat(document.getElementById('balance-to-customer').value) || 0;
+            const netAmount = totalAmount - balanceFromCustomer + balanceToCustomer;
+            document.getElementById('net-amount').textContent = `₹${netAmount.toFixed(2)}`;
+        }
+
+        function updateTotalAmount() {
+            let total = 0;
+            const rows = document.querySelectorAll('#current-records-body tr');
+            rows.forEach(row => {
+                const finalSumCell = row.cells[3];
+                const finalSumText = finalSumCell.textContent.trim().replace('₹', '');
+                const finalSum = parseFloat(finalSumText) || 0;
+                total += finalSum;
+            });
+            document.getElementById('total-amount').textContent = `₹${total.toFixed(2)}`;
+            updateNetAmount();
+        }
+
+        document.getElementById('kilo').addEventListener('input', updateFinalSum);
+        document.getElementById('sum').addEventListener('input', updateFinalSum);
+
+        // Function to show the loader
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        // Update the last ID in localStorage whenever a new record is added
+        function updateLastId() {
+            localStorage.setItem('lastId', currentId);
+        }
+
+        // Handle form submission with ID increment
+        let form = document.getElementById("metal-form");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Show the loader
+            showLoader();
+
+            document.getElementById('form-id').value = currentId;
+
+            let data = new FormData(form);
+            data.append('id', currentId);
+
+            fetch('https://script.google.com/macros/s/AKfycbx75GzfpEKdzIrHy9UP4yWxvjBNBwcg-38jwV-kltCftX9lxSJ5fFxGev9MR4Vz-qpvuw/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: data
+            })
+            .then(() => {
+                const finalSum = parseFloat(data.get('kilo')) * parseFloat(data.get('sum'));
+                const newRow = `
+                    <tr data-id="${currentId}">
+                        <td>${data.get('metalname')}</td>
+                        <td>${data.get('kilo')}kg</td>
+                        <td>₹${data.get('sum')}</td>
+                        <td>₹${finalSum.toFixed(2)}</td>
+                        <td style="padding: 0px; inline-size: 1%;">
+                            <button style="padding:6px 5px;" class="btn edit-btn">&#9997;</button>
+                        </td>
+                        <td style="padding: 0px; inline-size: 1%;">
+                            <button style="padding:6px 5px;" class="btn delete-btn">🗑️</button>
+                        </td>
+                    </tr>`;
+                document.getElementById('current-records-body').insertAdjacentHTML('beforeend', newRow);
+
+                updateTotalAmount();
+                updateLastId(); // Update lastId in localStorage
+                currentId++; // Increment for the next entry
+                form.reset();
+                document.getElementById('finalsum').value = '';
+                $('#formModal').modal('hide');
+
+                // Hide the loader after submission
+                hideLoader();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Hide the loader in case of an error
+                hideLoader();
+            });
+        });
+    
+            document.getElementById('clear-table').addEventListener('click', () => {
+                document.getElementById('current-records-body').innerHTML = ''; // Clear all rows from the current records table
+                document.getElementById('main-customer-name').value = ''; // Clear the main customer name input field
+                updateTotalAmount(); // Update total amount after clearing current records
+            });
+    
+            // Edit functionality (Frontend and Backend)
+            document.getElementById('current-records-body').addEventListener('click', function(e) {
+                if (e.target.classList.contains('edit-btn')) {
+                    const row = e.target.closest('tr');
+                    const cells = row.querySelectorAll('td');
+    
+                    // Populate the edit modal for editing
+                    document.getElementById('editId').value = row.getAttribute('data-id');
+                    document.getElementById('editMetalName').value = cells[0].innerText;
+                    document.getElementById('editKilo').value = cells[1].innerText.replace('kg', '');
+                    document.getElementById('editPrice').value = cells[2].innerText.replace('₹', '');
+    
+                    // Show the edit modal
+                    $('#editModal').modal('show');
+                }
+            });
+    
+            // Handle saving changes in the edit modal (Frontend and Backend)
+            document.getElementById('saveChanges').addEventListener('click', function() {
+                const id = document.getElementById('editId').value;
+                const updatedMetalName = document.getElementById('editMetalName').value;
+                const updatedKilo = document.getElementById('editKilo').value;
+                const updatedPrice = document.getElementById('editPrice').value;
+                const updatedFinalSum = parseFloat(updatedKilo) * parseFloat(updatedPrice);
+    
+                // Send updated data to the backend
+                fetch('https://script.google.com/macros/s/AKfycbx75GzfpEKdzIrHy9UP4yWxvjBNBwcg-38jwV-kltCftX9lxSJ5fFxGev9MR4Vz-qpvuw/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: new URLSearchParams({
+                        action: 'edit',
+                        id: id,
+                        metalname: updatedMetalName,
+                        kilo: updatedKilo,
+                        sum: updatedPrice
+                    })
+                })
+                .then(() => {
+                    // Update the frontend row after successful backend update
+                    const row = document.querySelector(`tr[data-id='${id}']`);
+                    if (row) {
+                        const cells = row.querySelectorAll('td');
+                        cells[0].innerText = updatedMetalName;
+                        cells[1].innerText = `${updatedKilo}kg`;
+                        cells[2].innerText = `₹${updatedPrice}`;
+                        cells[3].innerText = `₹${updatedFinalSum.toFixed(2)}`;
+                    }
+    
+                    $('#editModal').modal('hide');
+                    updateTotalAmount(); // Refresh totals
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+    
+            // Delete functionality (Frontend and Backend)
+            document.getElementById('current-records-body').addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-btn')) {
+                    const row = e.target.closest('tr');
+                    const id = row.getAttribute('data-id');
+    
+                    // Send delete request to the backend
+                    fetch('https://script.google.com/macros/s/AKfycbx75GzfpEKdzIrHy9UP4yWxvjBNBwcg-38jwV-kltCftX9lxSJ5fFxGev9MR4Vz-qpvuw/exec', {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: new URLSearchParams({
+                            action: 'delete',
+                            id: id
+                        })
+                    })
+                    .then(() => {
+                        // Remove the row from the table after successful deletion
+                        row.remove();
+                        updateTotalAmount(); // Refresh totals
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+    
+    
+            document.getElementById('balance-from-customer').addEventListener('input', updateNetAmount);
+            document.getElementById('balance-to-customer').addEventListener('input', updateNetAmount);
+        };
+    
+        document.querySelectorAll('.bottom-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+    
+                // Remove active class from all links and hide all tabs
+                document.querySelectorAll('.bottom-nav .nav-link').forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
+    
+                // Add active class to the clicked link
+                this.classList.add('active');
+    
+                // Show the target tab
+                const targetTab = document.querySelector(this.getAttribute('data-target'));
+                if (targetTab) {
+                    targetTab.style.display = 'block';
+                }
+            });
+        });
+    </script>
+    
+   
+    <script>
+        $(document).ready(function () {
+            let originalData = [];  // Variable to store the original data
+
+            // Function to fetch data from Google Sheets
+            function fetchData1() {
+                $.getJSON("https://script.google.com/macros/s/AKfycbyLfxqPMWfyr3TjqkXWMFm0486g4pLxIGUI2NokRA1DenUg5QSX6HUQTvmSiX0hphPh/exec", function (data) {
+                    originalData = data.sheet1Data;  // Store the fetched data
+                    renderTable(originalData);       // Render the table with the fetched data
+                });
+            }
+
+            // Function to render data into the table and calculate totals/averages
+            function renderTable(data) {
+                var dailyRows = "";
+                let totalKilo = 0, totalPrice = 0, totalSum = 0;
+
+                $.each(data, function (index, row) {
+                    dailyRows += '<tr class="dynamicells">' + row.map(value => '<td>' + value + '</td>').join('') + '</tr>';
+
+                    // Calculate totals (assuming Kilo, Price, and Total are numbers)
+                    totalKilo += parseFloat(row[4]) || 0;  // Kilo column
+                    totalPrice += parseFloat(row[5]) || 0; // Price column
+                    totalSum += parseFloat(row[6]) || 0;   // Total column
+                });
+
+                $("#MyTBody").html(dailyRows);
+
+                // Update the footer with totals and averages
+                let rowCount = data.length;
+                $("#totalKilo").text(totalKilo.toFixed(2) + " kg");   // Postfix 'kg'
+                $("#totalPrice").text(totalPrice.toFixed(2));
+                $("#totalSum").text(totalSum.toFixed(2));
+
+                // Postfix '%' for Price average
+                $("#avgPrice").text((rowCount > 0 ? (totalPrice / rowCount).toFixed(2) : "0") + "Rs");
+                $("#avgSum").text((rowCount > 0 ? (totalSum / rowCount).toFixed(2) : "0"));
+
+                // Calculate and display Your Price and Profit
+                calculateYourPriceAndProfit(totalKilo, totalSum); // Call function for your price & profit
+                calculateValueDifference(totalSum); // Calculate initial value difference
+            }
+
+            // Function to calculate and display "Your Price" and "Profit"
+            function calculateYourPriceAndProfit(totalKilo, totalSum) {
+                let yourPricePerKilo = parseFloat($("#yourPricePerKilo").text()) || 0;
+                let yourPriceTotal = yourPricePerKilo * totalKilo;
+                let profit = yourPriceTotal - totalSum;  // Adjusted profit calculation
+
+                // Display Your Price Total and Profit with 'Profit' postfix
+                $("#yourPriceTotal").text(yourPriceTotal.toFixed(2));
+                $("#profitValue").text(profit.toFixed(2) + " Profit"); // Postfix 'Profit'
+            }
+
+            // Function to calculate and display Value Difference
+            function calculateValueDifference(totalSum) {
+                let customValue = parseFloat($("#customValueInput").val()) || 0;
+                let valueDifference = customValue - totalSum; // Now it's total sum minus custom value
+                $("#valueDifference").text(valueDifference.toFixed(2) + " Rs"); // Show value difference with 'Rs'
+            }
+
+            // Function to apply all filters (search and date)
+            function applyFilters() {
+                let searchValue = $("#searchInput").val().toLowerCase();
+                let fromDateValue = $("#fromDate").val();
+                let toDateValue = $("#toDate").val();
+
+                let filteredData = originalData.filter(function (row) {
+                    let rowDate = row[1]; // Assuming Date/Time is in the second column
+                    let dateParts = rowDate.split(" ")[0].split("/"); // Split DD/MM/YYYY
+                    let rowDateObj = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`); // Convert to YYYY-MM-DD format
+
+                    // Filter by search value
+                    let matchesSearch = row.join(" ").toLowerCase().includes(searchValue);
+
+                    // Filter by date range
+                    let matchesDateRange = true;
+                    if (fromDateValue) {
+                        let fromDateObj = new Date(fromDateValue);
+                        matchesDateRange = matchesDateRange && rowDateObj >= fromDateObj;
+                    }
+                    if (toDateValue) {
+                        let toDateObj = new Date(toDateValue);
+                        matchesDateRange = matchesDateRange && rowDateObj <= toDateObj;
+                    }
+
+                    return matchesSearch && matchesDateRange;
+                });
+
+                renderTable(filteredData);
+            }
+
+            // Event listener for the search bar
+            $("#searchInput").on("keyup", applyFilters);
+
+            // Event listeners for the date inputs
+            $("#fromDate, #toDate").on("change", applyFilters);
+
+            // Event listener for the Fetch Data button
+            $("#fetchButton").on("click", function () {
+                fetchData1(); // Fetch data when the button is clicked
+            });
+
+            // Event listener for the Clear Filters button
+            $("#clearButton").on("click", function () {
+                $("#searchInput").val('');   // Clear search input
+                $("#fromDate").val('');      // Clear from date input
+                $("#toDate").val('');        // Clear to date input
+                $("#customValueInput").val(''); // Clear custom value input
+                renderTable(originalData);   // Render the original data
+            });
+
+            // Event listener for Your Price change (since it's editable)
+            $("#yourPricePerKilo").on("input", function () {
+                let totalKilo = parseFloat($("#totalKilo").text()) || 0;
+                let totalSum = parseFloat($("#totalSum").text()) || 0;
+                calculateYourPriceAndProfit(totalKilo, totalSum);
+                calculateValueDifference(totalSum); // Update value difference when price changes
+            });
+
+            // Event listener for Custom Value change
+            $("#customValueInput").on("input", function () {
+                let totalSum = parseFloat($("#totalSum").text()) || 0;
+                calculateValueDifference(totalSum); // Update value difference when custom value changes
+            });
+
+            // Initial data fetch when the page loads
+            fetchData1();
+        });
+    </script>
+
+
+<script>
+  $(document).ready(function() {
+    function fetchData2() {
+        $.getJSON("https://script.google.com/macros/s/AKfycbx75GzfpEKdzIrHy9UP4yWxvjBNBwcg-38jwV-kltCftX9lxSJ5fFxGev9MR4Vz-qpvuw/exec", function(data) {
+            var sheet2Rows = "";
+            $.each(data.sheet2Data, function(index, row) {
+                // Assuming total sum is in the last column (index - 1)
+                var totalSum = row[row.length - 1];
+
+                sheet2Rows += '<tr>' + row.map(value => '<td>' + value + '</td>').join('');
+                // Add input field for user input
+                sheet2Rows += '<td><input style="width:100% !important" type="number" class="user-input" data-index="' + index + '" value="0" /></td>';
+                // Add a cell for profit calculation
+                sheet2Rows += '<td class="profit" data-index="' + index + '">Profit: 0</td>';
+                sheet2Rows += '</tr>';
+            });
+            $("#Sheet2TBody").html(sheet2Rows);
+
+            // Attach change event to inputs to calculate profit
+            $(".user-input").on('input', function() {
+                var inputValue = parseFloat($(this).val()) || 0; // Get input value or 0
+                var rowIndex = $(this).data('index');
+                var totalSum = data.sheet2Data[rowIndex][data.sheet2Data[rowIndex].length - 1]; // Get total sum from the row
+
+                // Calculate profit
+                var profit = inputValue - totalSum;
+                $(".profit[data-index='" + rowIndex + "']").text('₹: ' + profit);
+            });
+        });
+    }
+
+    fetchData2(); // Initial fetch for Sheet2
+    setInterval(fetchData2, 100000); // Fetch every second
+});
+
+
+</script>
+
+<script>
+//     document.getElementById('screenshot-button').addEventListener('click', () => {
+//     // Sync the input value to the display span before taking the screenshot
+//     document.getElementById('customer-name-display').innerText = document.getElementById('main-customer-name').value;
+
+//     html2canvas(document.body).then(function(canvas) {
+//         let link = document.createElement('a');
+//         link.href = canvas.toDataURL('image/png');
+//         link.download = 'Siffin-metals.png';
+//         link.click();
+//     });
+// });
+document.getElementById('screenshot-button').addEventListener('click', () => {
+    // Get the value from the input field to use as a filename prefix
+    const customerName = document.getElementById('main-customer-name').value.trim();
+    
+    // Set a default name in case the input is empty
+    const prefix = customerName ? customerName : 'Unnamed-Customer';
+
+    // Get the current date and time
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format date as DD-MM-YYYY
+    const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false }).replace(/:/g, '-'); // Format time as HH-MM-SS
+
+    // Create a filename using the prefix, date, and time
+    const filename = `${prefix}-${formattedDate}-${formattedTime}-Siffin-metals.png`;
+
+    // Select the element with the class "container" to capture
+    const targetElement = document.querySelector('.container'); // Replace '.container' with the desired class if needed
+
+    // Capture the screenshot of the selected element using domtoimage
+    domtoimage.toBlob(targetElement)
+        .then(function(blob) {
+            // Save the file with the input value, date, and time in the filename
+            window.saveAs(blob, filename);
+        })
+        .catch(function(error) {
+            console.error('Oops, something went wrong while capturing the screenshot!', error);
+        });
+});
+
+
+</script>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
+</body>
+</html>
