@@ -161,22 +161,6 @@ input[type=number] {
 .serach-date>div>label {
     margin-bottom: 0px;
 }
-/* .dynamicells {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: max-content;
-}
-
-.dynamicells>td {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    display: flex;
-} */
 
 .proffs,.proffs2,.proffs3 {
      display: flex;
@@ -229,6 +213,54 @@ input[type=number] {
 .fa, .fas {
     color: white;
 }
+
+/* Floating Sidebar */
+.floating-sidebar {
+    position: fixed;
+    bottom: 45px;
+    right: 10px;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+}
+
+/* Toggle Arrow */
+/* Toggle Arrow Button */
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+}
+
+/* Green double arrow */
+.sidebar-toggle i {
+    font-size: 22px;
+    color: limegreen;
+}
+
+
+/* Action Buttons Container */
+.floating-actions {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    animation: slideIn 0.25s ease-in-out;
+}
+
+/* Slide animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -471,8 +503,15 @@ input[type=number] {
        
     </div>
 
-    <!-- Floating Buttons -->
-    <div class="floating-btn">
+ <!-- Floating Sidebar -->
+<div class="floating-sidebar">
+    <!-- Toggle Arrow -->
+    <button type="button" class="sidebar-toggle" id="sidebar-toggle">
+         <i class="fas fa-angle-double-left"></i>
+    </button>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions" id="floating-actions">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
             <i class="fas fa-plus"></i>
         </button>
@@ -483,6 +522,8 @@ input[type=number] {
             <i class="fas fa-camera"></i>
         </button>
     </div>
+</div>
+
 
     <!-- Bottom Navigation -->
    <!-- Bottom Navigation -->
@@ -1073,48 +1114,53 @@ input[type=number] {
 </script>
 
 <script>
-//     document.getElementById('screenshot-button').addEventListener('click', () => {
-//     // Sync the input value to the display span before taking the screenshot
-//     document.getElementById('customer-name-display').innerText = document.getElementById('main-customer-name').value;
-
-//     html2canvas(document.body).then(function(canvas) {
-//         let link = document.createElement('a');
-//         link.href = canvas.toDataURL('image/png');
-//         link.download = 'Siffin-metals.png';
-//         link.click();
-//     });
-// });
 document.getElementById('screenshot-button').addEventListener('click', () => {
-    // Get the value from the input field to use as a filename prefix
     const customerName = document.getElementById('main-customer-name').value.trim();
-    
-    // Set a default name in case the input is empty
-    const prefix = customerName ? customerName : 'Unnamed-Customer';
+    const prefix = customerName || 'Unnamed-Customer';
 
-    // Get the current date and time
     const now = new Date();
-    const formattedDate = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format date as DD-MM-YYYY
-    const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false }).replace(/:/g, '-'); // Format time as HH-MM-SS
+    const formattedDate = now.toLocaleDateString('en-GB').replace(/\//g, '-');
+    const formattedTime = now.toLocaleTimeString('en-GB', { hour12: false }).replace(/:/g, '-');
 
-    // Create a filename using the prefix, date, and time
     const filename = `${prefix}-${formattedDate}-${formattedTime}-Siffin-metals.png`;
 
-    // Select the element with the class "container" to capture
-    const targetElement = document.querySelector('.container'); // Replace '.container' with the desired class if needed
+    const targetElement = document.querySelector('.container');
 
-    // Capture the screenshot of the selected element using domtoimage
-    domtoimage.toBlob(targetElement)
-        .then(function(blob) {
-            // Save the file with the input value, date, and time in the filename
-            window.saveAs(blob, filename);
-        })
-        .catch(function(error) {
-            console.error('Oops, something went wrong while capturing the screenshot!', error);
+    // Small delay so UI settles
+    requestAnimationFrame(() => {
+        html2canvas(targetElement, {
+            scale: 1,                 // 🔥 HUGE SPEED BOOST (default = devicePixelRatio)
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            removeContainer: true
+        }).then(canvas => {
+            canvas.toBlob(blob => {
+                saveAs(blob, filename);
+            });
         });
+    });
 });
-
-
 </script>
+
+
+<script>
+document.getElementById('sidebar-toggle').addEventListener('click', function () {
+    const actions = document.getElementById('floating-actions');
+    const icon = this.querySelector('i');
+
+    if (actions.style.display === 'flex') {
+        actions.style.display = 'none';
+        icon.classList.remove('fa-angle-double-right');
+        icon.classList.add('fa-angle-double-left');
+    } else {
+        actions.style.display = 'flex';
+        icon.classList.remove('fa-angle-double-left');
+        icon.classList.add('fa-angle-double-right');
+    }
+});
+</script>
+
 
 
     <!-- Bootstrap JS and dependencies -->
