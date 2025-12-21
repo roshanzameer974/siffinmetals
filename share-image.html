@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Share from Phone</title>
+<title>Share Image</title>
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -28,65 +28,55 @@ body {
 <body>
 
 <div class="card shadow">
-    <h5>Pick Image from Phone</h5>
+    <h5>Select Image</h5>
 
-    <!-- Phone Gallery ONLY (no upload) -->
-    <input
-        type="file"
-        id="imageInput"
-        accept="image/*"
+    <!-- Gallery Access -->
+    <input 
+        type="file" 
+        id="imageInput" 
+        accept="image/*" 
         class="form-control mb-3"
     >
 
-   <img
-  id="preview"
-  style="
-    max-width: 100%;
-    max-height: 163px;
-    object-fit: contain;
-    display: none;
-    margin-bottom: 10px;
-    border-radius: 6px;
-  "
-/>
+    <img id="preview" style="max-width:100%; display:none; margin-bottom:10px;" />
 
-    <button class="btn btn-success btn-block" id="shareBtn">
-        Share
+    <button class="btn btn-success btn-block" onclick="shareImage()">
+        Share Image
     </button>
 </div>
 
 <script>
 let selectedFile = null;
 
-// Access phone gallery
 document.getElementById('imageInput').addEventListener('change', function (e) {
     selectedFile = e.target.files[0];
-    if (!selectedFile) return;
-
-    // Preview only (local memory)
-    const preview = document.getElementById('preview');
-    preview.src = URL.createObjectURL(selectedFile);
-    preview.style.display = 'block';
+    if (selectedFile) {
+        const preview = document.getElementById('preview');
+        preview.src = URL.createObjectURL(selectedFile);
+        preview.style.display = 'block';
+    }
 });
 
-// Share directly from phone (no upload)
-document.getElementById('shareBtn').addEventListener('click', async () => {
+async function shareImage() {
     if (!selectedFile) {
         alert("Please select an image first");
         return;
     }
 
-    if (!navigator.share || !navigator.canShare({ files: [selectedFile] })) {
+    if (navigator.share && navigator.canShare({ files: [selectedFile] })) {
+        try {
+            await navigator.share({
+                title: 'Siffin Metals',
+                text: 'Sharing image from Siffin Metals',
+                files: [selectedFile]
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    } else {
         alert("Sharing not supported on this device");
-        return;
     }
-
-    await navigator.share({
-        title: 'Siffin Metals',
-        text: 'Sharing image from phone',
-        files: [selectedFile]
-    });
-});
+}
 </script>
 
 </body>
